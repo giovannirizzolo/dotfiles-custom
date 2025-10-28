@@ -1,0 +1,104 @@
+#!/bin/bash 
+# Portable zsh + tmux layout helper
+# Usage: layout.zsh [h|v]
+#   h = big TOP pane + three panes along the BOTTOM
+#   v = big LEFT pane + three panes along the RIGHT
+
+prog=${CMD_NAME:-${${(%):-%N}:t}}
+
+set -euo pipefail
+
+# ---- utilities -----------------------------------------------------
+
+usage (){
+  echo "Usage: $prog [h|v]"
+  echo "  h = horizontal: big top + 3 panes along the bottom"
+  echo "  v = vertical: big left + 3 panes stacked on the right"
+  exit 1
+}
+
+require_cmd(){
+  command -v "$1" >/dev/null 2>&1 || {
+    echo "Error: '$1' not found. Please install it and try again." >&2
+    case "$1" in
+      tmux)
+        # lightweight hints for common OSes
+        if command -v brew >/dev/null/ 2>&1; then
+          echo "  macOS: brew install tmux" >&2
+        elif command -v apt-get >/dev/null 2>&1; then
+          echo "  Debian/Ubuntu/WSL: sudo apt-get update && sudo apt-get install -y tmux" >&2
+        elif command -v dnf >/dev/null 2>&1; then
+          echo "  Fedora: sudo dnf install -y tmux" >&2
+        fi
+        ;;
+    esac
+    exit 127
+  }
+}
+
+# ---- parse args -------------------------------------------------
+
+[[ $# -eq 1 ]] || usage
+mode="${1:l}" #make case-insensitive (Zsh: :l = to lowercase)
+[[ "$mode" == "h" || "$mode" == "v" ]] || usage
+
+# ---- env checks -------------------------------------------------
+
+require_cmd tmux
+# Optional: ensure tmux can talk to a terminal
+if [[ -z "${TMUX:-}" ]] && [[ ! -t 1 ]]; then
+  echo "Warning: stdout is not a TTY; running tmux might fail in non-interactive content." >&2
+fi
+
+# layout builders -----------------------------------------------------then
+
+make_horizontal_layout(){
+  local target="$1"
+  tmux select-window -t "$target"
+
+  tmux split-window -t "$target" -v -p 30
+  tmux split-window -t "$target" -h -p 66
+  tmux split-window -t "$target" -h -p 50
+
+  # Select the first initial window (top pane)
+  tmux select-pane -t "$target".0
+}
+
+make_vertical_layout(){
+  local target="$1"
+  tmux select-window -t "$target"
+
+  tmux split-window -t "$target" -h -p 30
+  tmux split-window -t "$target" -v -p 66
+  tmux split-window -t "$target" -v -p 50
+
+  # Select the first initial window (left pane)
+  tmux select-pane -t "$target".0
+}
+
+# ---- create target window (works inside/outside tmux) ------------------
+if [[ -n "${TMUX:-}" ]]; then
+# Inside tmux: create a new window and capture its target as "session:window"
+# -P prints info; -F formats it so we can parse reliably across OSes
+  target="$(tmux new-window -n "quad-$(mode)" -P -F '#{session_name}:#{window_index}')"
+else
+  # Outside tmux: create a new detached session, then attach at the end
+  sess="layout-${mode}"
+  tmux new-session -d -s "$sess" -n "quad-${mode}"
+  target="${sess}:1"
+fi
+
+
+# ----------build the chose layout --------------------
+
+if [[ "$mode" == "h" ]]; then
+  make_horizontal_layout "$target"
+else
+  make_vertical_layout "$target"
+fi
+
+# ---- attach if we created a new session --------------------
+
+if [[ -z "${TMUX:-}" ]]; then
+  tmux attach -t "$target"
+fi
