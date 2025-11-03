@@ -59,6 +59,23 @@ Pods/
 # Fish local config
 .config/fish/config-local.fish
 .config/fish/fish_variables.x86_64
+.config/fish/fish_variables
+.config/fish/fish_plugins
+
+.config/fish/fish_variables
+.config/fish/fish_plugins
+.config/fish/fishd.*
+.config/fish/completions/
+
+.config/fish/conf.d/
+!.config/fish/conf.d/tide.fish
+
+.config/fish/functions/*.fish
+.config/fish/functions/tide/
+!.config/fish/functions/fish_user_key_bindings.fish
+!.config/fish/functions/fzf_change_directory.fish
+!.config/fish/functions/peco_change_directory.fish
+!.config/fish/functions/peco_select_history.fish
 
 # Karabiner
 .config/karabiner/automatic_backups
@@ -78,3 +95,4 @@ Pods/
 
 # Claude Code
 .claude/*.local.json
+cat >> .gitignore <<'EOF'
