@@ -95,4 +95,3 @@ Pods/
 
 # Claude Code
 .claude/*.local.json
-cat >> .gitignore <<'EOF'
