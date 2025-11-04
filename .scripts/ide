@@ -1,8 +1,15 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 # Portable zsh + tmux layout helper
 # Usage: ide [h|v]
+if command -v fish >/dev/null 2>&1; then
+  SHELL="$(command -v fish)"
+if command -v zsh >/dev/null 2>&1; then
+  SHELL="$(command -v zsh)"
+if command -v bash >/dev/null 2>&1; then
+  SHELL="$(command -v bash)"
+export SHELL
 
-prog=${CMD_NAME:-${${(%):-%N}:t}}
+prog=${SHELL:-${${(%):-%N}:t}}
 
 set -euo pipefail
 
