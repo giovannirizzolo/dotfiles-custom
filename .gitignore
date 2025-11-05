@@ -58,6 +58,7 @@ Pods/
 
 # Fish local config
 .config/fish/config-local.fish
+.config/fish/fish_variables.*
 .config/fish/fish_variables.x86_64
 .config/fish/fish_variables
 .config/fish/fish_plugins
@@ -76,6 +77,7 @@ Pods/
 !.config/fish/functions/fzf_change_directory.fish
 !.config/fish/functions/peco_change_directory.fish
 !.config/fish/functions/peco_select_history.fish
+!.config/fish/functions/pcd_get_code_root.fish
 
 # Karabiner
 .config/karabiner/automatic_backups
