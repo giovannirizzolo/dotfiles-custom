@@ -1,89 +1,68 @@
 #!/usr/bin/env bash
-# Portable zsh + tmux layout helper
-# Usage: ide [h|v]
-if command -v fish >/dev/null 2>&1; then
-  SHELL="$(command -v fish)"
-if command -v zsh >/dev/null 2>&1; then
-  SHELL="$(command -v zsh)"
-if command -v bash >/dev/null 2>&1; then
-  SHELL="$(command -v bash)"
-export SHELL
-
-prog=${SHELL:-${${(%):-%N}:t}}
-
+# tmux "IDE" layout with built-in layouts and fixed main pane sizes
+# Usage: ide [h|v]   (h = big top; v = big left)
 set -euo pipefail
 
-usage (){
-  echo "Usage: $prog [h|v]"
-  echo "  h = horizontal: big top + 3 panes along the bottom"
-  echo "  v = vertical: big left + 3 panes stacked on the right"
+# ==== TUNE HERE =====================================================
+MAIN_PCT_H=70 # % of window height for the big TOP pane in horizontal mode
+MAIN_PCT_V=70 # % of window width  for the big LEFT pane in vertical mode
+# ===================================================================
+
+usage() {
+  echo "Usage: $(basename "$0") [h|v]"
   exit 1
 }
-
-require_cmd(){
-  command -v "$1" >/dev/null 2>&1 || {
-    echo "Error: '$1' not found. Please install it and try again." >&2
-    case "$1" in
-      tmux)
-        if command -v brew >/dev/null 2>&1; then
-          echo "  macOS: brew install tmux" >&2
-        elif command -v apt-get >/dev/null 2>&1; then
-          echo "  Debian/Ubuntu/WSL: sudo apt-get update && sudo apt-get install -y tmux" >&2
-        elif command -v dnf >/dev/null 2>&1; then
-          echo "  Fedora: sudo dnf install -y tmux" >&2
-        fi
-        ;;
-    esac
-    exit 127
-  }
-}
-
-# ---- parse args
 [[ $# -eq 1 ]] || usage
-mode="${1:l}"                # zsh: to lowercase
-[[ "$mode" == "h" || "$mode" == "v" ]] || usage
+mode="$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')"
+[[ "$mode" = h || "$mode" = v ]] || usage
 
-# ---- env checks
-require_cmd tmux
-if [[ -z "${TMUX:-}" ]] && [[ ! -t 1 ]]; then
-  echo "Warning: stdout is not a TTY; running tmux might fail in non-interactive context." >&2
-fi
-
-make_horizontal_layout(){
-  local target="$1"
-  tmux select-window -t "$target"
-  tmux split-window -t "$target" -v -p 30
-  tmux split-window -t "$target" -h -p 66
-  tmux split-window -t "$target" -h -p 50
-  tmux select-pane -t "$target".0
+command -v tmux >/dev/null || {
+  echo "tmux not found" >&2
+  exit 127
 }
 
-make_vertical_layout(){
-  local target="$1"
-  tmux select-window -t "$target"
-  tmux split-window -t "$target" -h -p 30
-  tmux split-window -t "$target" -v -p 66
-  tmux split-window -t "$target" -v -p 50
-  tmux select-pane -t "$target".0
-}
-
-# ---- create target window (works inside/outside tmux)
+# create window (inside or outside tmux)
 if [[ -n "${TMUX:-}" ]]; then
-  target="$(tmux new-window -n "quad-${mode}" -P -F '#{session_name}:#{window_index}')"
+  win_id="$(tmux new-window -n "quad-${mode}" -P -F '#{window_id}')" # @X
+  tmux select-window -t "$win_id"
 else
   sess="layout-${mode}"
   tmux new-session -d -s "$sess" -n "quad-${mode}"
-  target="${sess}:1"
+  win_id="$(tmux display-message -p -t "${sess}:1" '#{window_id}')" # @X
 fi
 
-# ---- build layout
-if [[ "$mode" == "h" ]]; then
-  make_horizontal_layout "$target"
+# Build 4 panes quickly (no percentages → robust on small terminals)
+tmux split-window -t "$win_id" -h
+tmux split-window -t "$win_id" -v
+tmux split-window -t "$win_id" -v
+
+# Compute absolute size for the main pane from window dimensions
+win_w=$(tmux display-message -p -t "$win_id" '#{window_width}')
+win_h=$(tmux display-message -p -t "$win_id" '#{window_height}')
+
+clamp() { # clamp value to [min,max]
+  local v="$1" min="$2" max="$3"
+  ((v < min)) && v="$min"
+  ((v > max)) && v="$max"
+  printf '%d' "$v"
+}
+
+if [[ "$mode" = h ]]; then
+  main_h=$((win_h * MAIN_PCT_H / 100))
+  main_h=$(clamp "$main_h" 5 "$((win_h - 3))") # avoid too-small panes
+  tmux setw -t "$win_id" main-pane-height "$main_h"
+  tmux select-layout -t "$win_id" main-horizontal # big top
 else
-  make_vertical_layout "$target"
+  main_w=$((win_w * MAIN_PCT_V / 100))
+  main_w=$(clamp "$main_w" 10 "$((win_w - 5))")
+  tmux setw -t "$win_id" main-pane-width "$main_w"
+  tmux select-layout -t "$win_id" main-vertical # big left
 fi
 
-# ---- attach if we created a new session
+tmux select-pane -t "$win_id".0
+
+# attach if we started tmux
 if [[ -z "${TMUX:-}" ]]; then
-  tmux attach -t "$target"
+  sess_and_win="$(tmux display-message -p -t "$win_id" '#{session_name}:#{window_index}')"
+  exec tmux attach -t "$sess_and_win"
 fi
