@@ -74,3 +74,7 @@ end)
 vim.api.nvim_create_user_command("ToggleAutoformat", function()
 	require("craftzdog.lsp").toggleAutoformat()
 end, {})
+
+-- Comfortable ESC mode --
+keymap.set("i", "jj", "<Esc>", opts)
+keymap.set("i", "jk", "<Esc>", opts)
