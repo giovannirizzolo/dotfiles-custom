@@ -27,12 +27,17 @@ else
     end
 end
 
+test -f $HOME/dotfiles-custom/.config/fish/config-local.fish
+source $HOME/dotfiles-custom/.config/fish/config-local.fish
+
+set -g fish_function_path $HOME/dotfiles-custom/.config/fish/functions $fish_function_path
+
 # OS‑specific path tweaks
 switch (uname)
     case Darwin
         source (dirname (status --current-filename))/config-osx.fish
     case Linux
-	source (dirname (status --current-filename))/config-linux.fish
+        source (dirname (status --current-filename))/config-linux.fish
         fish_add_path /usr/local/bin
         fish_add_path ~/.local/bin
 end
@@ -44,5 +49,24 @@ if type -q pyenv
     status --is-interactive; and source (pyenv init - | psub)
 end
 
+#Setup git alias
+if type -q git
+    alias gc 'git c'
+    alias gd 'git wdiff'
+    alias gl 'git l5'
+    alias gs 'git s'
+    alias gws 'git sw'
+    alias gb 'git br --list'
+end
+
+if type -q lazygit
+    alias lg lazygit
+end
+
+#Setup FZF to use ripgrep
+if type rg &>/dev/null
+    export FZF_DEFAULT_COMMAND='rg --files'
+    export FZF_DEFAULT_OPTS='-m'
+end
 # Note: Don’t source bash scripts like nvm.sh here. For Node version management in fish,
 # install a fish‑native solution later (e.g. fisher install jorgebucaran/nvm.fish).
