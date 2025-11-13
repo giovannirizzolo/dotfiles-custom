@@ -56,6 +56,7 @@ return {
 				"<leader>fP",
 				function()
 					require("telescope.builtin").find_files({
+						prompt_prefix = "🐉 ",
 						cwd = require("lazy.core.config").options.root,
 					})
 				end,
@@ -66,6 +67,7 @@ return {
 				function()
 					local builtin = require("telescope.builtin")
 					builtin.find_files({
+						prompt_prefix = "🐉 ",
 						no_ignore = false,
 						hidden = true,
 					})
@@ -159,6 +161,7 @@ return {
 			local fb_actions = require("telescope").extensions.file_browser.actions
 
 			opts.defaults = vim.tbl_deep_extend("force", opts.defaults, {
+				prompt_prefix = "🐉 ",
 				wrap_results = true,
 				layout_strategy = "horizontal",
 				layout_config = { prompt_position = "top" },
