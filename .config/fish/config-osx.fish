@@ -3,7 +3,8 @@ fish_add_path /opt/homebrew/sbin
 
 if type -q eza
     alias ll "eza -l -g --icons"
-    alias lla "ll -a"
+    alias la "ll -a"
+    alias lt "ll --tree --level=2 -a ."
 end
 
 #FZF
