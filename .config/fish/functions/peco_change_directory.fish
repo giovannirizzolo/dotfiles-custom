@@ -21,33 +21,13 @@ function pcd_get_code_root --description 'Get or prompt for the coding repo root
 end
 
 function _peco_change_directory
-    set -l query ""
-    if test (count $argv) -gt 0
-        set query "--query=$argv "
-    end
-
-    # collect candidates into a temp file so peco can read from a filename
-    set -l tmp (mktemp)
-    if test -p /proc/self/fd/0
-        cat >$tmp
+    if [ (count $argv) ]
+        peco --layout=bottom-up --query "$argv " | perl -pe 's/([ ()])/\\\\$1/g' | read foo
     else
-        echo -n '' >$tmp
+        peco --layout=bottom-up | perl -pe 's/([ ()])/\\\\$1/g' | read foo
     end
-
-    set -l sel ""
-    # prefer fzf if available (doesn't need a pty)
-    if type -q fzf
-        set sel (cat $tmp | fzf --layout=reverse --query (string trim -r -- $argv))
-    else
-        # run peco inside a pty so the UI renders correctly on Linux
-        set sel (script -qfec "peco --layout=bottom-up $query $tmp" /dev/null | string trim -r)
-    end
-
-    rm -f $tmp
-
-    if test -n "$sel"
-        set sel (echo $sel | perl -pe 's/([ ()])/\\\\$1/g')
-        builtin cd $sel
+    if [ $foo ]
+        builtin cd $foo
     else
         commandline ''
     end
