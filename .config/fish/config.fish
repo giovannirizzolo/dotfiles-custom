@@ -27,8 +27,9 @@ else
     end
 end
 
-test -f $HOME/dotfiles-custom/.config/fish/config-local.fish
-source $HOME/dotfiles-custom/.config/fish/config-local.fish
+if test -f $HOME/dotfiles-custom/.config/fish/config-local.fish
+    source $HOME/dotfiles-custom/.config/fish/config-local.fish
+end
 
 set -g fish_function_path $HOME/dotfiles-custom/.config/fish/functions $fish_function_path
 
