@@ -5,6 +5,8 @@ if type -q eza
     alias ll "eza -l -g --icons"
     alias la "ll -a"
     alias lt "ll --tree --level=2 -a ."
+    alias md "mkdir -p"
+    alias tt tmux
 end
 
 #FZF
