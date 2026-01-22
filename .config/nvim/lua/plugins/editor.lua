@@ -167,6 +167,13 @@ return {
 				end,
 				desc = "Live grep (with args)",
 			},
+			{
+				"gO",
+				function()
+					require("telescope.builtin").lsp_document_symbols()
+				end,
+				desc = "LSP Document Symbols (Telescope)",
+			},
 		},
 		config = function(_, opts)
 			local telescope = require("telescope")
