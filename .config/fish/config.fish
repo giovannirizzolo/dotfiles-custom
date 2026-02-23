@@ -69,5 +69,7 @@ if type rg &>/dev/null
     export FZF_DEFAULT_COMMAND='rg --files'
     export FZF_DEFAULT_OPTS='-m'
 end
-# Note: Don’t source bash scripts like nvm.sh here. For Node version management in fish,
-# install a fish‑native solution later (e.g. fisher install jorgebucaran/nvm.fish).
+export PATH="$HOME/.local/bin:$PATH"
+
+# nvm.fish - use latest installed LTS on shell start
+nvm use lts
