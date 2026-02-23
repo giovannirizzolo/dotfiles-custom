@@ -4,6 +4,9 @@ return {
 		"smjonas/inc-rename.nvim",
 		cmd = "IncRename",
 		config = true,
+		opts = {
+			preview = false,
+		},
 	},
 
 	-- Go forward/backward with square brackets

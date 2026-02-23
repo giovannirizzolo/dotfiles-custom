@@ -78,3 +78,8 @@ end, {})
 -- Comfortable ESC mode --
 keymap.set("i", "jj", "<Esc>", opts)
 keymap.set("i", "jk", "<Esc>", opts)
+
+-- Inc Rename --
+keymap.set("n", "<leader>rn", function()
+	return ":IncRename " .. vim.fn.expand("<cword>")
+end, { expr = true, noremap = true })
