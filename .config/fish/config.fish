@@ -10,7 +10,7 @@ fish_add_path $HOME/dotfiles-custom/.scripts
 
 # Ensure the data directory for 'z' lives under your home directory
 set -gx _Z_DATA $HOME/.local/share/z/data
-mkdir -p $_Z_DATA
+mkdir -p (dirname $_Z_DATA)
 
 # Load Homebrew’s environment, but only if brew is installed
 if type -q brew
