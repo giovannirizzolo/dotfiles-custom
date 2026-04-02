@@ -7,6 +7,7 @@ end
 
 # Add your custom scripts
 fish_add_path $HOME/dotfiles-custom/.scripts
+fish_add_path $HOME/go/bin
 
 # Ensure the data directory for 'z' lives under your home directory
 set -gx _Z_DATA $HOME/.local/share/z/data
