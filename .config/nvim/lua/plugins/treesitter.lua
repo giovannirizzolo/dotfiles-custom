@@ -2,25 +2,37 @@ return {
 	{ "nvim-treesitter/playground", cmd = "TSPlaygroundToggle" },
 
 	{
+		"nvim-treesitter/nvim-treesitter-context",
+		event = "BufReadPre",
+		opts = {
+			max_lines = 3,
+		},
+	},
+
+	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter-textobjects",
+		},
 		opts = {
 			ensure_installed = {
 				"astro",
-				"cmake",
-				"cpp",
 				"css",
+				"elixir",
 				"fish",
 				"gitignore",
 				"go",
 				"graphql",
+				"heex",
+				"html",
 				"http",
-				"java",
-				"php",
-				"rust",
+				"javascript",
+				"json",
 				"scss",
 				"sql",
-				"svelte",
+				"tsx",
+				"typescript",
 			},
 
 			-- matchup = {
@@ -32,6 +44,33 @@ return {
 				enable = true,
 				use_virtual_text = true,
 				lint_events = { "BufWrite", "CursorHold" },
+			},
+
+			textobjects = {
+				select = {
+					enable = true,
+					lookahead = true,
+					keymaps = {
+						["af"] = "@function.outer",
+						["if"] = "@function.inner",
+						["ac"] = "@class.outer",
+						["ic"] = "@class.inner",
+						["aa"] = "@parameter.outer",
+						["ia"] = "@parameter.inner",
+					},
+				},
+				move = {
+					enable = true,
+					set_jumps = true,
+					goto_next_start = {
+						["]f"] = "@function.outer",
+						["]c"] = "@class.outer",
+					},
+					goto_previous_start = {
+						["[f"] = "@function.outer",
+						["[c"] = "@class.outer",
+					},
+				},
 			},
 
 			playground = {
