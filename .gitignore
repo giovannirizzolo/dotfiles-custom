@@ -59,12 +59,7 @@ Pods/
 # Fish local config
 .config/fish/config-local.fish
 .config/fish/fish_variables.*
-.config/fish/fish_variables.x86_64
 .config/fish/fish_variables
-.config/fish/fish_plugins
-
-.config/fish/fish_variables
-.config/fish/fish_plugins
 .config/fish/fishd.*
 .config/fish/completions/
 
@@ -93,6 +88,9 @@ Pods/
 .config/zed/.tmp*
 .config/zed/embeddings
 .config/zed/prompts
+
+# Go
+.config/go/telemetry/
 
 # Claude Code
 .claude/*.local.json

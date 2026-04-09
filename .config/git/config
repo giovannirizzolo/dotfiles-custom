@@ -1,0 +1,25 @@
+[alias]
+	s = status
+	st = status
+	c = commit
+	sw = switch
+	br = branch
+	last = log -1
+	lo = log --oneline
+	amend = commit --amend
+	untrack = rm --cached
+	unadd = restore --staged
+	dlc = diff --cached HEAD^
+	aliases = config --get-regexp alias
+	first = rev-list --max-parents=0 HEAD
+	incoming = log HEAD..@{upstream}
+	outgoing = log @{u}..HEAD
+	mycommits = "!git log --author=\"$(git config user.name)\""
+	wdiff = diff -w --word-diff=color --ignore-space-at-eol
+	structure = log --oneline --simplify-by-decoration --graph --all
+	slog = log --pretty=format:'%C(auto)%h %C(red)%as %C(blue)%aN%C(auto)%d%C(green) %s'
+	l = slog
+	l1 = slog -1
+	l5 = slog -5
+	l10 = slog -10
+	l20 = slog -20

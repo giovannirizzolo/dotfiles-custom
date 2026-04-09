@@ -27,8 +27,8 @@ return {
 								return
 							end
 
-							-- macOS:
-							vim.fn.jobstart({ "open", url }, { detach = true })
+							local open_cmd = vim.fn.has("mac") == 1 and "open" or "xdg-open"
+							vim.fn.jobstart({ open_cmd, url }, { detach = true })
 							vim.notify("Opened: " .. url)
 						end)
 					end,

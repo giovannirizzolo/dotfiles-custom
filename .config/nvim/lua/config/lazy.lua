@@ -51,7 +51,9 @@ require("lazy").setup({
 		-- version = "*", -- try installing the latest stable version for plugins that support semver
 	},
 	dev = {
-		path = "~/.ghq/github.com",
+		path = vim.fn.isdirectory(vim.fn.expand("~/.ghq/github.com")) == 1
+				and "~/.ghq/github.com"
+			or nil,
 	},
 	checker = { enabled = true }, -- automatically check for plugin updates
 	performance = {
