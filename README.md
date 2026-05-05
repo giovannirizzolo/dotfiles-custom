@@ -16,6 +16,31 @@ Personal dotfiles managed with [rcm](https://github.com/thoughtbot/rcm) or symli
 
 - **`ide`** — Creates a tmux 4-pane layout (`ide h` for horizontal, `ide v` for vertical)
 
+### Next Trip Countdown
+
+Because nothing makes you productive like a constant reminder that you could be on a beach right now.
+
+The tmux statusline replaces the hostname (who cares about the hostname) with a live countdown to the next trip:
+
+```
+972980d left to Wonderland
+```
+
+When the trip is over and you're back at your desk with mild post-vacation depression, it switches to:
+
+```
+Add next trip to next_trip.fish
+```
+
+**To update the destination**, edit `.config/tmux/next_trip/next_trip.fish`:
+
+```fish
+set TRIP_NAME Wonderland
+set TRIP_DATE 2999-01-01  # YYYY-MM-DD
+```
+
+Then reload tmux config. The countdown resumes. Hope returns.
+
 ## Setup
 
 Clone into your home directory and symlink the configs:
