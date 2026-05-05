@@ -1,0 +1,2 @@
+set TRIP_NAME Zanzibar
+set TRIP_DATE 2026-06-19
