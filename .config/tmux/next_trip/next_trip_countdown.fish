@@ -18,10 +18,11 @@ end
 
 if test (uname) = Darwin
     set t (date -j -f %Y-%m-%d "$TRIP_DATE" +%s 2>/dev/null)
+    set n (date -j -f %Y-%m-%d (date +%Y-%m-%d) +%s)
 else
     set t (date -d "$TRIP_DATE" +%s 2>/dev/null)
+    set n (date -d (date +%Y-%m-%d) +%s)
 end
-set n (date +%s)
 set r (math "$t - $n")
 
 if test "$r" -le 0
