@@ -9,7 +9,7 @@ return {
 		opts = {
 			lsp_keymaps = false, -- prevent go.nvim from overriding keymaps like gO
 			lsp_cfg = true, -- use go.nvim's gopls setup
-			lsp_inlay_hints = { enable = true },
+			lsp_inlay_hints = { enable = false },
 		},
 		config = function(_, opts)
 			require("go").setup(opts)
