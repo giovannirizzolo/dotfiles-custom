@@ -16,6 +16,9 @@ return {
 			"nvim-treesitter/nvim-treesitter-textobjects",
 		},
 		opts = {
+			highlight = {
+				enable = true,
+			},
 			ensure_installed = {
 				"astro",
 				"css",
@@ -92,17 +95,5 @@ return {
 				},
 			},
 		},
-		config = function(_, opts)
-			local TS = require("nvim-treesitter")
-			TS.setup(opts)
-
-			-- MDX
-			vim.filetype.add({
-				extension = {
-					mdx = "mdx",
-				},
-			})
-			vim.treesitter.language.register("markdown", "mdx")
-		end,
 	},
 }
