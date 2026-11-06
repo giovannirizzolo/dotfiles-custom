@@ -12,6 +12,10 @@ function fish_user_key_bindings
         bind \cr _fzf_search_history # Bind for fzf select history to Ctrl+R
     end
 
+    # Ghostty cmd+shift+y sends F12 → theme picker (inside tmux, tmux
+    # catches F12 first and opens the picker in a popup instead).
+    bind f12 'ghostty_theme; commandline -f repaint'
+
     # vim-like
     bind \cl forward-char
 
