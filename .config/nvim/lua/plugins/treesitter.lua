@@ -32,6 +32,7 @@ return {
 				"http",
 				"javascript",
 				"json",
+				"kotlin",
 				"scss",
 				"sql",
 				"tsx",

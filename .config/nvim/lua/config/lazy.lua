@@ -33,7 +33,7 @@ require("lazy").setup({
 		{ import = "lazyvim.plugins.extras.lang.markdown" },
 		{ import = "lazyvim.plugins.extras.lang.tailwind" },
 		{ import = "lazyvim.plugins.extras.lang.elixir" },
-		{ import = "lazyvim.plugins.extras.lang.vue" },
+		-- { import = "lazyvim.plugins.extras.lang.vue" },
 		-- { import = "lazyvim.plugins.extras.dap.core" },
 		{ import = "lazyvim.plugins.extras.util.mini-hipatterns" },
 		-- { import = "lazyvim.plugins.extras.test.core" },
@@ -52,9 +52,7 @@ require("lazy").setup({
 		-- version = "*", -- try installing the latest stable version for plugins that support semver
 	},
 	dev = {
-		path = vim.fn.isdirectory(vim.fn.expand("~/.ghq/github.com")) == 1
-				and "~/.ghq/github.com"
-			or nil,
+		path = vim.fn.isdirectory(vim.fn.expand("~/.ghq/github.com")) == 1 and "~/.ghq/github.com" or nil,
 	},
 	checker = { enabled = true }, -- automatically check for plugin updates
 	performance = {
