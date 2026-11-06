@@ -134,31 +134,6 @@ return {
 					readonly_icon = " 󰌾 ",
 				}),
 			}
-			local function pomo_format(seconds)
-				seconds = math.floor(seconds)
-				local h = math.floor(seconds / 3600)
-				local m = math.floor((seconds % 3600) / 60)
-				local s = seconds % 60
-				local parts = {}
-				if h > 0 then parts[#parts + 1] = h .. "h" end
-				if m > 0 then parts[#parts + 1] = m .. "m" end
-				parts[#parts + 1] = s .. "s"
-				return table.concat(parts, " ")
-			end
-
-			opts.sections.lualine_x[1] = {
-				function()
-					local ok, pomo = pcall(require, "pomo")
-					if not ok then return "" end
-					local timer = pomo.get_first_to_finish()
-					if not timer then return "" end
-					local time_left = timer:time_remaining()
-					if not time_left then return "" end
-					local icon = timer.paused and "⏸ (paused)" or "󰄉"
-					local name = timer.name and (" " .. timer.name) or ""
-					return icon .. name .. ": " .. pomo_format(time_left)
-				end,
-			}
 		end,
 	},
 
@@ -169,7 +144,6 @@ return {
 			plugins = {
 				gitsigns = true,
 				tmux = true,
-				kitty = { enabled = false, font = "+2" },
 			},
 		},
 		keys = { { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
