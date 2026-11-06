@@ -69,7 +69,7 @@ end
 #Setup FZF to use ripgrep
 if type rg &>/dev/null
     export FZF_DEFAULT_COMMAND='rg --files'
-    export FZF_DEFAULT_OPTS='-m'config.
+    export FZF_DEFAULT_OPTS='-m'
 end
 export PATH="$HOME/.local/bin:$PATH"
 
