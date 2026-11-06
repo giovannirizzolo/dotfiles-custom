@@ -1,12 +1,7 @@
 # ~/.config/fish/config.fish
 
-# Only run for interactive sessions
-if status is-interactive
-    set -g fish_prompt_pwd_dir_length 0 # show full paths in prompt
-end
-
 # Add your custom scripts
-fish_add_path $HOME/dotfiles-custom/.scripts
+fish_add_path (path resolve ~/.config/fish/../../.scripts)
 fish_add_path $HOME/go/bin
 
 # Ensure the data directory for 'z' lives under your home directory
@@ -28,11 +23,9 @@ else
     end
 end
 
-if test -f $HOME/dotfiles-custom/.config/fish/config-local.fish
-    source $HOME/dotfiles-custom/.config/fish/config-local.fish
+if test -f ~/.config/fish/config-local.fish
+    source ~/.config/fish/config-local.fish
 end
-
-set -g fish_function_path $HOME/dotfiles-custom/.config/fish/functions $fish_function_path
 
 # OS‑specific path tweaks
 switch (uname)
