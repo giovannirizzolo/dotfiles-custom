@@ -1,7 +1,7 @@
 # ~/.config/fish/config.fish
 
 # Add your custom scripts
-fish_add_path (path resolve ~/.config/fish/../../.scripts)
+fish_add_path ~/dotfiles-custom/.scripts
 fish_add_path $HOME/go/bin
 
 # Ensure the data directory for 'z' lives under your home directory

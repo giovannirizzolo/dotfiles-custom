@@ -1,6 +1,6 @@
 # dotfiles-custom
 
-Personal dotfiles managed with [rcm](https://github.com/thoughtbot/rcm) or symlinks.
+Personal dotfiles. This repo is the source of truth; binding it into `~/.config` is left to the machine.
 
 ## What's Included
 
@@ -89,17 +89,10 @@ Optional: Google Chrome (only to re-render the GTA VI backdrop PNG from `assets/
 
 ## Setup
 
-Clone into your home directory and symlink the configs:
+Clone the repo, then make each folder in `.config/` available at `~/.config/<tool>`. How you do that (symlinks, rcm, Stow, copies) is up to you and outside this repo. Every config refers to `~/.config/<tool>`, never to the checkout path. The one exception is `~/dotfiles-custom/.scripts`, which fish adds to `PATH`.
 
 ```sh
 git clone git@github.com:giovannirizzolo/dotfiles-custom.git ~/dotfiles-custom
-
-# Symlink every config into ~/.config. All configs refer to ~/.config/<tool>,
-# never to the checkout path, so the clone can live anywhere.
-mkdir -p ~/.config
-for d in fish ghostty git lazygit nvim tmux; do
-  ln -sfn ~/dotfiles-custom/.config/$d ~/.config/$d
-done
 
 # Fish plugins (Tide, z, fzf.fish, nvm.fish), from fish_plugins
 fish -c 'curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update'
@@ -117,4 +110,3 @@ Troubleshooting:
 - **Theme colors look grey or washed out inside tmux:** the shell started before truecolor was enabled. Run `exec fish`.
 - **A shell still shows old prompt colors:** check for `set -g tide_*color` overrides in `conf.d`. Globals beat the theme's values.
 
-Or use a dotfile manager like [rcm](https://github.com/thoughtbot/rcm) or [GNU Stow](https://www.gnu.org/software/stow/).
