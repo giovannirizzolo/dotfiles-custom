@@ -85,7 +85,6 @@ Pods/
 # Lazygit
 .config/lazygit/state.yml
 .config/nvim/lazy-lock.json
-.config/nvim/lazyvim.json
 
 # Zed
 .config/zed/.tmp*
