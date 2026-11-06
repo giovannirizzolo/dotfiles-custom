@@ -89,10 +89,22 @@ Optional: Google Chrome (only to re-render the GTA VI backdrop PNG from `assets/
 
 ## Setup
 
-Clone the repo, then make each folder in `.config/` available at `~/.config/<tool>`. How you do that (symlinks, rcm, Stow, copies) is up to you and outside this repo. Every config refers to `~/.config/<tool>`, never to the checkout path. The one exception is `~/dotfiles-custom/.scripts`, which fish adds to `PATH`.
+Clone the repo, then make each folder in `.config/` available at `~/.config/<tool>`. How you do that (symlinks, rcm, Stow, copies) is up to you and outside this repo; the optional snippet below symlinks them after backing up what you already have. Run it in bash or zsh, not fish. Every config refers to `~/.config/<tool>`, never to the checkout path. The one exception is `~/dotfiles-custom/.scripts`, which fish adds to `PATH`.
 
 ```sh
 git clone git@github.com:giovannirizzolo/dotfiles-custom.git ~/dotfiles-custom
+
+# Optional: symlink the configs into ~/.config.
+# ⚠️ This REPLACES any existing config for these tools. Back them up first:
+backup=~/.config-backup-$(date +%Y%m%d-%H%M%S)
+mkdir -p "$backup"
+for d in fish ghostty git lazygit nvim tmux; do
+  # move real folders/files aside; existing symlinks are just replaced
+  [ -e ~/.config/$d ] && [ ! -L ~/.config/$d ] && mv ~/.config/$d "$backup/"
+  ln -sfn ~/dotfiles-custom/.config/$d ~/.config/$d
+done
+echo "previous configs (if any) are in $backup"
+# To undo: rm ~/.config/<tool> && mv "$backup/<tool>" ~/.config/
 
 # Fish plugins (Tide, z, fzf.fish, nvm.fish), from fish_plugins
 fish -c 'curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update'
