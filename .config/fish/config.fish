@@ -58,6 +58,10 @@ if type -q lazygit
     alias lg lazygit
 end
 
+if type -q lazydocker
+    alias ld lazydocker
+end
+
 #Setup FZF to use ripgrep
 if type rg &>/dev/null
     export FZF_DEFAULT_COMMAND='rg --files'

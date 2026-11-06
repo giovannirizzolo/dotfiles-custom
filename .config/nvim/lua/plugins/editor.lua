@@ -58,11 +58,11 @@ return {
 					local builtin = require("telescope.builtin")
 					builtin.find_files({
 						prompt_prefix = "🐉 ",
-						no_ignore = false,
-						hidden = true,
+						-- include hidden and gitignored files, but skip .git internals
+						find_command = { "rg", "--files", "--hidden", "--no-ignore", "--glob", "!**/.git/*" },
 					})
 				end,
-				desc = "Lists files in your current working directory, respects .gitignore",
+				desc = "Lists all files in your current working directory, including hidden and gitignored",
 			},
 			{
 				";r",
@@ -167,7 +167,9 @@ return {
 					)
 					vim.list_extend(
 						files,
-						vim.fn.systemlist("git -C " .. vim.fn.shellescape(root) .. " ls-files --others --exclude-standard")
+						vim.fn.systemlist(
+							"git -C " .. vim.fn.shellescape(root) .. " ls-files --others --exclude-standard"
+						)
 					)
 					if #files == 0 then
 						vim.notify("No changed files", vim.log.levels.INFO)
