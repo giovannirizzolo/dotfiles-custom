@@ -97,5 +97,8 @@ Pods/
 # Ghostty: theme picked by ghostty_theme (local state)
 .config/ghostty/current-theme.ghostty
 
+# Tmux: statusline rendered from the Ghostty theme by ghostty-theme.sh
+.config/tmux/statusline.theme.conf
+
 # Ghostty: local snapshots made before theme experiments
 .config/ghostty/backups/
