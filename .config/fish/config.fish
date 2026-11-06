@@ -73,4 +73,4 @@ end
 export PATH="$HOME/.local/bin:$PATH"
 
 # nvm.fish - use latest installed LTS on shell start
-nvm use lts
+status is-interactive; and nvm use --silent lts
