@@ -58,8 +58,7 @@ Pods/
 
 # Fish local config
 .config/fish/config-local.fish
-.config/fish/fish_variables.*
-.config/fish/fish_variables
+.config/fish/fish_variables*
 .config/fish/fishd.*
 .config/fish/completions/
 

@@ -2,7 +2,10 @@ fish_add_path /opt/homebrew/bin
 fish_add_path /opt/homebrew/sbin
 
 if type -q eza
+    alias l "eza --icons --group-directories-first --classify"
+    alias ls "eza --icons --group-directories-first"
     alias ll "eza -l -g --icons"
+    alias d "eza -D --icons"
     alias la "ll -a"
     alias lt "ll --tree --level=2 -a ."
     alias md "mkdir -p"

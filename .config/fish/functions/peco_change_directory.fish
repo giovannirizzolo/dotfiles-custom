@@ -59,6 +59,15 @@ function peco_change_directory
                 end
             end
         end
+
+        # 4) repos under ~/repositories (depth 1–2) — avoid failing globs
+        if test -d "$HOME/repositories"
+            for p in $HOME/repositories/*
+                if test -d "$p"; and not string match -q '*/.git*' -- "$p"
+                    echo "$p"
+                end
+            end
+        end
     end \
         | sed -e 's:/*$::' \
         | awk '!a[$0]++' \
