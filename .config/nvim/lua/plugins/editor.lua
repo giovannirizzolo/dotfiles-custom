@@ -154,6 +154,34 @@ return {
 				desc = "Live grep (with args)",
 			},
 			{
+				"<leader>g/",
+				function()
+					local root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+					if vim.v.shell_error ~= 0 then
+						vim.notify("Not a git repository", vim.log.levels.WARN)
+						return
+					end
+					-- modified/staged (excluding deleted) + untracked files
+					local files = vim.fn.systemlist(
+						"git -C " .. vim.fn.shellescape(root) .. " diff --name-only --diff-filter=d HEAD"
+					)
+					vim.list_extend(
+						files,
+						vim.fn.systemlist("git -C " .. vim.fn.shellescape(root) .. " ls-files --others --exclude-standard")
+					)
+					if #files == 0 then
+						vim.notify("No changed files", vim.log.levels.INFO)
+						return
+					end
+					require("telescope.builtin").live_grep({
+						cwd = root,
+						search_dirs = files,
+						prompt_title = "Live Grep (git changed files)",
+					})
+				end,
+				desc = "Grep git changed files",
+			},
+			{
 				"gO",
 				function()
 					require("telescope.builtin").lsp_document_symbols()

@@ -16,3 +16,11 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt.conceallevel = 0
 	end,
 })
+
+-- Disable format on save for markdown
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "markdown" },
+	callback = function()
+		vim.b.autoformat = false
+	end,
+})

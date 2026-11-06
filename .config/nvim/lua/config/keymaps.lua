@@ -36,8 +36,10 @@ keymap.set("n", "dw", 'vb"_d')
 keymap.set("n", "<Leader>o", "o<Esc>^Da", opts)
 keymap.set("n", "<Leader>O", "O<Esc>^Da", opts)
 
--- Jumplist
-keymap.set("n", "<C-m>", "<C-i>", opts)
+-- Jumplist forward (Tab below shadows the real <C-i>, so bypass mappings)
+keymap.set("n", "<C-m>", function()
+	vim.cmd("normal! " .. vim.v.count1 .. "\t")
+end, opts)
 
 -- New tab
 keymap.set("n", "te", ":tabedit")
@@ -130,3 +132,8 @@ end, { desc = "Start " .. pomo_sessions[3].name })
 keymap.set("n", "<Leader>ptB", function()
 	vim.api.nvim_cmd({ cmd = "TimerStart", args = { pomo_sessions[4].duration, pomo_sessions[4].name } }, {})
 end, { desc = "Start " .. pomo_sessions[4].name })
+
+-- Yank --
+keymap.set("n", "<Leader>y_", function()
+	vim.fn.setreg("+", vim.fn.expand("%:."))
+end, { desc = "Yank filename" })
