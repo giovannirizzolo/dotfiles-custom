@@ -1,0 +1,53 @@
+# GTA VI — Vice City sunset: deep violet night, hot pink neon,
+# Miami orange and the blue-to-orange gradient of the VI logo.
+#
+# Rockstar publishes no official hex values. Brand colors below are the
+# ones sampled from the logo by seekvectorlogos.com/vector/gta-6/
+# (marked "brand"); everything else is derived to keep the ANSI roles
+# readable (green and cyan have no brand source at all).
+
+background = #1d0030
+foreground = #f3e6f0
+cursor-color = #ff2b90
+cursor-text = #1d0030
+selection-background = #6d016d
+selection-foreground = #ffffff
+
+palette = 0=#350054
+palette = 1=#ff2b90
+palette = 2=#3ddc97
+palette = 3=#e6953e
+palette = 4=#4a7bf0
+palette = 5=#c045b6
+palette = 6=#3fd0e0
+palette = 7=#e8d8ec
+palette = 8=#7d6396
+palette = 9=#ff4cb9
+palette = 10=#7cf0bf
+palette = 11=#ffbc24
+palette = 12=#6e9bff
+palette = 13=#e57be6
+palette = 14=#8beaf2
+palette = 15=#ffffff
+
+# ── Backdrop: the official VI logo, centered, static ────────────────
+# Rendered from assets/gta-vi/gta-vi-logo.svg (Wikimedia Commons, 2026
+# logo) to PNG, since Ghostty's background-image takes PNG/JPEG only.
+# Re-render after editing assets/gta-vi/render.html (logo size, pink glow):
+#   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new \
+#     --hide-scrollbars --force-device-scale-factor=1 --default-background-color=00000000 \
+#     --window-size=3200,2000 --screenshot=gta-vi-bg.png "file://$PWD/render.html"
+# The PNG is padded so `contain` keeps the logo at ~30% of the window height (blurred 7px).
+background-image = ~/.config/ghostty/assets/gta-vi/gta-vi-bg.png
+background-image-position = center
+background-image-fit = contain
+background-image-repeat = false
+# Lower = more subtle behind text (0.3 calm · 0.45 vivid).
+background-image-opacity = 0.4
+
+# ── Cursor: smear + searchlight ring on jumps, halo cycling sunset colors
+custom-shader = ~/.config/ghostty/shaders/cursor_sunset.glsl
+custom-shader-animation = true
+
+# ── Font ──
+font-family = IBM Plex Mono

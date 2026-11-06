@@ -1,0 +1,98 @@
+# ╭──────────────────────────────────────────────────────────────╮
+# │                    ✦  g h o s t t y  ✦                       │
+# │   gotham noir · frosted glass · bat-signal cursor · glow     │
+# ╰──────────────────────────────────────────────────────────────╯
+# Reload: cmd+shift+,   ·   Docs: https://ghostty.org/docs/config
+
+# ── Theme ─────────────────────────────────────────────────────────
+# Themes live in themes/ and may carry more than colors (Gotham Noir also
+# brings its shaders and icon). Don't set colors here: they'd override
+# every theme. Switch with cmd+shift+y, the command palette (cmd+shift+p
+# → "Switch Theme"), or `ghostty_theme` in fish.
+# Default theme; the switcher writes its pick to current-theme.ghostty
+# (gitignored), which is loaded last and wins.
+theme = "~/.config/ghostty/themes/Gotham Noir"
+config-file = ?current-theme.ghostty
+# Lifts dim colors (comments, grey prompts) until they're readable.
+minimum-contrast = 1.8
+bold-is-bright = false
+
+# ── Typography ────────────────────────────────────────────────────
+# font-family lives in each theme (themes/*): both use IBM Plex Mono.
+# Icons come from Ghostty's built-in Nerd Font symbols.
+font-size = 14
+font-thicken = true
+font-thicken-strength = 80
+adjust-cell-height = 18%
+# Fira Code stylistic sets: ss01 r · ss02 <= >= · ss03 & · ss05 @ · ss08 == ===
+# cv14 cursive 3 · zero dotted 0
+font-feature = calt
+font-feature = liga
+font-feature = ss01
+font-feature = ss02
+font-feature = ss03
+font-feature = ss05
+font-feature = ss08
+font-feature = zero
+
+# ── Glass ─────────────────────────────────────────────────────────
+background-opacity = 0.86
+background-blur = 40
+unfocused-split-opacity = 0.75
+
+# ── Window chrome ─────────────────────────────────────────────────
+macos-titlebar-style = tabs
+window-padding-x = 18
+window-padding-y = 14
+window-padding-balance = true
+window-padding-color = extend
+window-colorspace = display-p3
+window-save-state = always
+window-inherit-working-directory = true
+resize-overlay = never
+
+# ── Cursor & animation ────────────────────────────────────────────
+cursor-style = bar
+cursor-style-blink = true
+cursor-opacity = 0.9
+
+# ── Quality of life ───────────────────────────────────────────────
+mouse-hide-while-typing = true
+copy-on-select = clipboard
+macos-option-as-alt = left
+shell-integration-features = cursor,sudo,title
+confirm-close-surface = false
+selection-clear-on-copy = true
+
+# ── Notifications ─────────────────────────────────────────────────
+# Ping me when a command that ran 10s+ finishes while I'm elsewhere.
+notify-on-command-finish = unfocused
+notify-on-command-finish-after = 10s
+notify-on-command-finish-action = no-bell,notify
+
+# ── Quake-style drop-down terminal (needs Accessibility permission) ─
+quick-terminal-position = top
+quick-terminal-screen = mouse
+quick-terminal-animation-duration = 0.18
+quick-terminal-autohide = true
+keybind = global:cmd+grave_accent=toggle_quick_terminal
+
+# ── Gotham toggle ─────────────────────────────────────────────────
+# Opaque "focus mode": hides the red sky, grain, skyline, moon, bats,
+# Batman and Joker (the shaders only paint on the see-through glass).
+keybind = cmd+shift+b=toggle_background_opacity
+
+# ── Theme switcher ────────────────────────────────────────────────
+# Sends F12: tmux opens the fzf picker in a popup (works whatever the pane
+# is running); outside tmux, fish binds F12 to `ghostty_theme`.
+keybind = cmd+shift+y=text:\x1b[24~
+command-palette-entry = title:Switch Theme,description:Pick a Ghostty theme (fzf),action:text:\x1b[24~
+
+# ── Splits ────────────────────────────────────────────────────────
+keybind = cmd+d=new_split:right
+keybind = cmd+shift+d=new_split:down
+keybind = cmd+alt+left=goto_split:left
+keybind = cmd+alt+right=goto_split:right
+keybind = cmd+alt+up=goto_split:up
+keybind = cmd+alt+down=goto_split:down
+keybind = cmd+shift+enter=toggle_split_zoom

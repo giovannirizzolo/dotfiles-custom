@@ -93,3 +93,9 @@ Pods/
 
 # Claude Code
 .claude/*.local.json
+
+# Ghostty: theme picked by ghostty_theme (local state)
+.config/ghostty/current-theme.ghostty
+
+# Ghostty: local snapshots made before theme experiments
+.config/ghostty/backups/

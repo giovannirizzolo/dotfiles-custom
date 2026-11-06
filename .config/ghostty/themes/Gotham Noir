@@ -1,0 +1,50 @@
+# Gotham Noir — Batman: The Animated Series "dark deco" palette.
+# Painted on black paper: blood-red skies, slate-blue towers,
+# amber windows and the bat-signal cutting through the smog.
+
+background = #0b0b10
+foreground = #cfc8b8
+cursor-color = #f5d547
+cursor-text = #0b0b10
+selection-background = #5c1217
+selection-foreground = #f1ead9
+
+# black · red sky · ivy green · window amber · night blue · joker purple · freeze teal · newsprint
+palette = 0=#1b1b23
+palette = 1=#b3242b
+palette = 2=#6e8f3c
+palette = 3=#e0a83e
+palette = 4=#3f5b80
+palette = 5=#7d4a91
+palette = 6=#5d8a8c
+palette = 7=#cfc8b8
+palette = 8=#4b4b58
+palette = 9=#e2474f
+palette = 10=#9cc35b
+palette = 11=#f5d547
+palette = 12=#7393bc
+palette = 13=#ac72c4
+palette = 14=#8fc1c1
+palette = 15=#f1ead9
+
+# ── Gotham-only look (lives here so other themes don't inherit it) ──
+unfocused-split-fill = #0b0b10
+
+# Bat-signal icon: black ghost on a yellow beam.
+macos-icon = custom-style
+macos-icon-frame = chrome
+macos-icon-ghost-color = #0b0b10
+macos-icon-screen-color = #e0a83e,#f5d547
+
+# Shaders run in order: noir post-processing, the Gotham sky
+# (moon, glider, bats — behind the text), then the cursor on top
+# (smear + searchlight ring on jumps, halo cycling yellow/amber/red).
+# Home-relative (~/) paths: portable across machines; plain relative ones
+# would resolve against the theme dir.
+custom-shader = ~/.config/ghostty/shaders/noir.glsl
+custom-shader = ~/.config/ghostty/shaders/gotham_sky.glsl
+custom-shader = ~/.config/ghostty/shaders/cursor_signal.glsl
+custom-shader-animation = true
+
+# ── Font ──
+font-family = IBM Plex Mono
