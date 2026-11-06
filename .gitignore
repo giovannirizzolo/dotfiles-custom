@@ -62,8 +62,9 @@ Pods/
 .config/fish/fishd.*
 .config/fish/completions/
 
-.config/fish/conf.d/
+.config/fish/conf.d/*
 !.config/fish/conf.d/tide.fish
+!.config/fish/conf.d/tide_ghostty_sync.fish
 
 .config/fish/functions/*.fish
 .config/fish/functions/tide/
@@ -71,6 +72,8 @@ Pods/
 !.config/fish/functions/fzf_change_directory.fish
 !.config/fish/functions/peco_change_directory.fish
 !.config/fish/functions/peco_select_history.fish
+!.config/fish/functions/tide_ghostty_colors.fish
+!.config/fish/functions/_tide_item_brand.fish
 
 # Karabiner
 .config/karabiner/automatic_backups
