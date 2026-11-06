@@ -24,6 +24,31 @@ The active Ghostty theme drives the whole setup. Switch it and everything follow
 | Neovim | solarized-osaka repainted with the theme's palette | `.config/nvim/lua/config/ghostty_theme.lua` |
 | Fish prompt | Tide colors, logo pill (bold **VI** for GTA VI, moon for Gotham), rounded pills, prompt arrow | `.config/fish/functions/tide_ghostty_colors.fish` |
 
+### The themes
+
+#### Gotham Noir (default)
+
+A rainy night over Gotham: near-black glass, a red sky and the bat-signal.
+
+- **Colors:** ink-black background (`#0b0b10`), parchment text, blood-red selection, and signal yellow (`#f5d547`) as the accent.
+- **Backdrop** (shaders, drawn only behind text on the see-through glass):
+  - `noir.glsl`: red-sky haze, vignette and film grain.
+  - `gotham_sky.glsl`: an art-deco skyline under a pale moon. Every couple of minutes, brick-built Batman and Joker minifigs fly across (alone or in a chase), with a few bats in between.
+- **Cursor** (`cursor_signal.glsl`): a soft halo drifting through signal yellow, window amber and red. When the cursor jumps, a smear runs red to yellow and a searchlight ring spreads.
+- **App icon:** a custom Ghostty icon in amber and yellow.
+- **Prompt:** moon logo pill, rounded pills, a dotted `┄` rooftop line, and a narrow `›` arrow in signal yellow.
+
+#### GTA VI
+
+A Vice City sunset: deep violet night, hot-pink neon and Miami orange, taken from the VI logo.
+
+- **Colors:** violet background (`#1d0030`), hot pink (`#ff2b90`) as the accent, sunset orange, and the logo's blue. Rockstar publishes no official hex values: the brand colors were sampled from the logo, and green and cyan were derived to keep terminal colors readable.
+- **Backdrop:** the VI logo, centered, softly blurred and at 40% opacity (`background-image-opacity`). It's rendered from `assets/gta-vi/gta-vi-logo.svg` to a PNG via `render.html`; the steps are in `themes/GTA VI`.
+- **Cursor** (`cursor_sunset.glsl`): a halo cycling pink, orange and purple. On jumps, a purple-to-pink smear and a pink-to-orange searchlight ring.
+- **Prompt:** a hand-drawn logo pill (no font has a GTA glyph) with a bold **V** in sunset orange and **I** in hot pink. Plus rounded pills, a solid `─` line and a `▶` arrow in hot pink.
+
+**Shared by both:** IBM Plex Mono, frosted glass (86% opacity, blur 40), and <kbd>cmd</kbd>+<kbd>shift</kbd>+<kbd>b</kbd> to go opaque and hide the backdrop. Tmux and Neovim take each theme's palette (see the table above).
+
 **Switching:** press <kbd>cmd</kbd>+<kbd>shift</kbd>+<kbd>y</kbd> (or "Switch Theme" in Ghostty's command palette). Ghostty sends F12, which opens an fzf picker with a color preview, in a tmux popup inside tmux or in fish outside it. You can also run `ghostty_theme` (`--all` adds Ghostty's built-in themes, `ghostty_theme "GTA VI"` skips the picker).
 
 How it works:
