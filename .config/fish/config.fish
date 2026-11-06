@@ -62,10 +62,14 @@ if type -q lazydocker
     alias ld lazydocker
 end
 
+if type -q nvim
+    alias n 'nvim .'
+end
+
 #Setup FZF to use ripgrep
 if type rg &>/dev/null
     export FZF_DEFAULT_COMMAND='rg --files'
-    export FZF_DEFAULT_OPTS='-m'
+    export FZF_DEFAULT_OPTS='-m'config.
 end
 export PATH="$HOME/.local/bin:$PATH"
 
